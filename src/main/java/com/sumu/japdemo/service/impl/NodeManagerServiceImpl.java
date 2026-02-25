@@ -119,6 +119,23 @@ public class NodeManagerServiceImpl implements NodeManagerService {
 
     @Override
     @Transactional
+    public void unregisterFiles(String nodeId, List<String> hashes) {
+        if (hashes == null || hashes.isEmpty()) {
+            return;
+        }
+
+        for (String hash : hashes) {
+            nodeFileMapper.delete(
+                    new LambdaQueryWrapper<NodeFile>()
+                            .eq(NodeFile::getNodeId, nodeId)
+                            .eq(NodeFile::getFileHash, hash)
+            );
+            fileIndexService.updateFileNodeCount(hash);
+        }
+    }
+
+    @Override
+    @Transactional
     public void unregisterNode(String nodeId) {
         List<NodeFile> nodeFiles = nodeFileMapper.selectList(
                 new LambdaQueryWrapper<NodeFile>()

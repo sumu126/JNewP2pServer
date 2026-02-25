@@ -80,6 +80,18 @@ public class SignalingSocketIOModule {
         }
     }
 
+    @OnEvent("unregister-files")
+    public void onUnregisterFiles(SocketIOClient client, AckRequest ack, List<String> hashes) {
+        String nodeId = client.getSessionId().toString();
+
+        logger.info("用户 {} 取消注册文件: {}", nodeId, hashes);
+
+        if (hashes != null && !hashes.isEmpty()) {
+            nodeManagerService.unregisterFiles(nodeId, hashes);
+            logger.info("用户 {} 取消注册了 {} 个文件", nodeId, hashes.size());
+        }
+    }
+
     @OnEvent("search-files")
     public void onSearchFiles(SocketIOClient client, AckRequest ack, String query) {
         String nodeId = client.getSessionId().toString();

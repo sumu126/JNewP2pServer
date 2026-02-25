@@ -10,6 +10,8 @@ public interface NodeManagerService {
 
     void registerFiles(String nodeId, List<FileRegister> files);
 
+    void unregisterFiles(String nodeId, List<String> hashes);
+
     void unregisterNode(String nodeId);
 
     void updateHeartbeat(String nodeId);
