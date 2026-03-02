@@ -94,7 +94,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.sumu.japdemo.JApDemoApplication</mainClass>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
                 <executions>
                     <execution>
